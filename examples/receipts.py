@@ -1,10 +1,8 @@
 import os
-from azure.ai.formrecognizer import FormRecognizerClient, FormTrainingClient
+from azure.ai.formrecognizer import FormRecognizerClient
 
 
-def begin_recognize_receipts(
-    form_recognizer_client: FormRecognizerClient, form_training_client: FormTrainingClient
-):
+def recognize_receipts(form_recognizer_client: FormRecognizerClient):
     receiptUrl = "https://raw.githubusercontent.com/Azure/azure-sdk-for-python/master/sdk/formrecognizer/azure-ai-formrecognizer/tests/sample_forms/receipt/contoso-receipt.png"
 
     poller = form_recognizer_client.begin_recognize_receipts_from_url(receiptUrl)

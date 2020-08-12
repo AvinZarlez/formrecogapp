@@ -8,9 +8,7 @@ def format_bounding_box(bounding_box):
     return ", ".join(["[{}, {}]".format(p.x, p.y) for p in bounding_box])
 
 
-def begin_recognize_content(
-    form_recognizer_client: FormRecognizerClient, form_training_client: FormTrainingClient
-):
+def recognize_content(form_recognizer_client: FormRecognizerClient):
     formUrl = str(os.environ["FORM_DATA_URL"])
 
     poller = form_recognizer_client.begin_recognize_content_from_url(formUrl)
