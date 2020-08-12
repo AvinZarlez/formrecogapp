@@ -1,5 +1,7 @@
 import os
 
+from examples.begin_recognize_content import begin_recognize_content
+
 from azure.ai.formrecognizer import FormRecognizerClient, FormTrainingClient
 from azure.core.credentials import AzureKeyCredential
 from azure.core.exceptions import ResourceNotFoundError
@@ -11,49 +13,11 @@ form_recognizer_client = FormRecognizerClient(endpoint=endpoint, credential=Azur
 
 form_training_client = FormTrainingClient(endpoint, AzureKeyCredential(key))
 
+begin_recognize_content(form_recognizer_client, form_training_client)
+
+
 trainingDataUrl = str(os.environ["TRAINING_DATA_URL"])
-formUrl = str(os.environ["FORM_DATA_URL"])
 receiptUrl = "https://raw.githubusercontent.com/Azure/azure-sdk-for-python/master/sdk/formrecognizer/azure-ai-formrecognizer/tests/sample_forms/receipt/contoso-receipt.png"
-
-poller = form_recognizer_client.begin_recognize_content_from_url(formUrl)
-contents = poller.result()
-
-
-def format_bounding_box(bounding_box):
-    if not bounding_box:
-        return "N/A"
-    return ", ".join(["[{}, {}]".format(p.x, p.y) for p in bounding_box])
-
-
-for idx, content in enumerate(contents):
-    print("----Recognizing content from page #{}----".format(idx))
-    print(
-        "Has width: {} and height: {}, measured with unit: {}".format(
-            content.width, content.height, content.unit
-        )
-    )
-    for table_idx, table in enumerate(content.tables):
-        print(
-            "Table # {} has {} rows and {} columns".format(
-                table_idx, table.row_count, table.column_count
-            )
-        )
-        for cell in table.cells:
-            print(
-                "...Cell[{}][{}] has text '{}' within bounding box '{}'".format(
-                    cell.row_index,
-                    cell.column_index,
-                    cell.text,
-                    format_bounding_box(cell.bounding_box),
-                )
-            )
-    for line_idx, line in enumerate(content.lines):
-        print(
-            "Line # {} has word count '{}' and text '{}' within bounding box '{}'".format(
-                line_idx, len(line.words), line.text, format_bounding_box(line.bounding_box)
-            )
-        )
-    print("----------------------------------------")
 
 
 poller = form_recognizer_client.begin_recognize_receipts_from_url(receiptUrl)
