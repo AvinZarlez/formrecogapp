@@ -31,3 +31,8 @@ jobs:
     - name: Run main.py
       run: |
         python main.py
+      env:
+        FORM_DATA_URL: ${{ secrets.FORM_DATA_URL }}
+        FORM_RECOGNIZER_ENDPOINT: ${{ secrets.FORM_RECOGNIZER_ENDPOINT }}
+        FORM_RECOGNIZER_KEY: ${{ secrets.FORM_RECOGNIZER_KEY }}
+        TRAINING_DATA_URL: ${{ secrets.TRAINING_DATA_URL }}
