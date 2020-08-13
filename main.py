@@ -31,14 +31,14 @@ form_training_client = FormTrainingClient(endpoint, AzureKeyCredential(key))
 
 
 # Begin examples:
-# print("\n\nbegin_recognize_content:\n")
-# recognize_content(form_recognizer_client)
+print("\n\nbegin_recognize_content:\n")
+recognize_content(form_recognizer_client)
 
-# print("\n\nbegin_recognize_receipts:\n")
-# recognize_receipts(form_recognizer_client)
+print("\n\nbegin_recognize_receipts:\n")
+recognize_receipts(form_recognizer_client)
 
 print("\n\nbegin_recognize_custom_forms:\n")
-recognize_custom_forms(form_recognizer_client, form_training_client, False)
+recognize_custom_forms(form_recognizer_client, form_training_client, True)
 
 
 # First, we see how many custom models we have, and what our limit is
