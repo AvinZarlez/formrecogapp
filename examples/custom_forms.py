@@ -9,12 +9,16 @@ def format_bounding_box(bounding_box):
 
 
 def recognize_custom_forms(
-    form_recognizer_client: FormRecognizerClient, form_training_client: FormTrainingClient
+    form_recognizer_client: FormRecognizerClient,
+    form_training_client: FormTrainingClient,
+    training_labels: bool,
 ):
     trainingDataUrl = str(os.environ["TRAINING_DATA_URL"])
     formUrl = str(os.environ["FORM_DATA_URL"])
 
-    poller = form_training_client.begin_training(trainingDataUrl, use_training_labels=False)
+    poller = form_training_client.begin_training(
+        trainingDataUrl, use_training_labels=training_labels
+    )
     model = poller.result()
 
     # Custom model information
